@@ -1,25 +1,33 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+import UseCoronaData from './useCoronaData';
 
-function App() {
+function App(){
+
+  const [value, setValue] = useState('');
+
+  const data = UseCoronaData(value)
+
+  let confirmed;
+  let name;
+
+  if(data !== undefined){
+    confirmed = data.latest_data.confirmed;
+    name = data.name
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <input
+        type='text'
+        value={value}
+        onChange={evt => {
+          setValue(evt.target.value)
+        }}
+        />
+        <h1>{name} {confirmed}</h1>
     </div>
-  );
+  )
 }
 
 export default App;
